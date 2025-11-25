@@ -56,7 +56,7 @@ public class ProductoController {
         repo.deleteById(id);
     }
 
-    //----------------------------------------metodos de descripcion------------------------------------------------
+    //-------------------------------------metodos de descripcion------------------------------------------------
 
 
     @GetMapping({"/descriciones"})
