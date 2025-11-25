@@ -38,10 +38,11 @@ public class ProductoController {
     }
 
     //modificar
-    @PutMapping
-    public Producto update(@RequestBody Producto producto) {
-        return repo.save(producto);
+    @PutMapping("{id}")
+    public Producto update(@PathVariable int id, @RequestBody Producto producto) {
+        return repo.findById(id).orElse(producto);
     }
+
 
     //buscar por id
     @GetMapping("{id}")
@@ -55,7 +56,7 @@ public class ProductoController {
         repo.deleteById(id);
     }
 
-    //--------------------------------------------metodos de descripcion------------------------------------------------
+    //----------------------------------------metodos de descripcion------------------------------------------------
 
 
     @GetMapping({"/descriciones"})
