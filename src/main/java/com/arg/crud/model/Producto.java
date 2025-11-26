@@ -32,7 +32,7 @@ public class Producto {
     public int getId_categoria() { return id_categoria; }
     public void setId_categoria(int id_categoria) { this.id_categoria = id_categoria; }
 
-    public int getId_id_descuento() { return id_descuento; }
+    public int getId_descuento() { return id_descuento; }
     public void setId_descuento(int id_descuento) { this.id_descuento = id_descuento;}
 
     public int getId_tack_prod() { return id_stack_prod; }

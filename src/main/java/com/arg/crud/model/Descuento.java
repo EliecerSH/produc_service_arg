@@ -6,7 +6,7 @@ public class Descuento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_descuento;
-    private int descuento_porcentaje;
+    private float descuento_porcentaje;
     private String descripcion;
 
 
@@ -17,10 +17,10 @@ public class Descuento {
         this.id_descuento = id_descuento;
     }
 
-    public int getDescuento_porcentaje() {
+    public float getDescuento_porcentaje() {
         return descuento_porcentaje;
     }
-    public void setDescuento_porcentaje(int descuento_porcentaje) {
+    public void setDescuento_porcentaje(float descuento_porcentaje) {
         this.descuento_porcentaje = descuento_porcentaje;
     }
 
