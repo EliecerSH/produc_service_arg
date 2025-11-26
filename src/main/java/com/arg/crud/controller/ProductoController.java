@@ -40,26 +40,45 @@ public class ProductoController {
     //modificar
     @PutMapping("{id}")
     public Producto update(@PathVariable int id, @RequestBody Producto producto) {
-        return repo.findById(id).orElse(producto);
-    }
 
+        return repo.findById(id)
+                .map(prodExistente -> {
+
+                    prodExistente.setNombre(producto.getNombre());
+                    prodExistente.setPrecio(producto.getPrecio());
+                    prodExistente.setStock(producto.getStock());
+                    prodExistente.setId_categoria(producto.getId_categoria());
+                    prodExistente.setId_descuento(producto.getId_descuento());
+                    prodExistente.setId_tack_prod(producto.getId_tack_prod());
+                    prodExistente.setDescripcion(producto.getDescripcion());
+
+                    return repo.save(prodExistente);
+                })
+                .orElseThrow(() ->
+                        new RuntimeException("El producto con ID " + id + " no existe"));
+    }
 
     //buscar por id
     @GetMapping("{id}")
     public Producto findById(@PathVariable int id) {
-        return repo.findById(id).get();
+
+        return repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("El producto con el ID: "+ id +" no existe"));
     }
 
     //eliminar por is
     @DeleteMapping({"{id}"})
     public void deleteById(@PathVariable int id) {
+        if (!repo.existsById(id)) {
+            throw new RuntimeException("El producto con el ID: " + id + " no existe");
+        }
         repo.deleteById(id);
     }
 
     //-------------------------------------metodos de descripcion------------------------------------------------
 
 
-    @GetMapping({"/descriciones"})
+    @GetMapping({"/descripciones"})
     public List<Descripcion> findAllByOrderByNombreAsc() {return desRepo.findAll();}
 
     @PostMapping("/descriciones")
@@ -68,10 +87,18 @@ public class ProductoController {
     }
 
     @GetMapping("/descriciones/{id}")
-    public Descripcion findByIdDescricion(@PathVariable int id) {return desRepo.findById(id).get();}
+    public Descripcion findByIdDescricion(@PathVariable int id) {
+        return desRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("La descipcion con el ID: "+ id +" no existe"));
+    }
 
     @DeleteMapping("/descriciones/{id}")
-    public void deleteByIdDescricion(@PathVariable int id) {desRepo.deleteById(id);}
+    public void deleteByIdDescricion(@PathVariable int id) {
+        if (!desRepo.existsById(id)) {
+            throw new RuntimeException("El descripcion con el ID: " + id + " no existe");
+        }
+        desRepo.deleteById(id);
+    }
 
     @PutMapping({"/descriciones/{id}"})
     public Descripcion updateDescricion(@RequestBody Descripcion descripcion, @PathVariable int id) {
@@ -86,7 +113,10 @@ public class ProductoController {
     public List<Categorias>finAllByOrderByNombreAsc(){return cRepo.findAll();}
 
     @GetMapping({"/categoria/{id}"})
-    public Categorias finById(@PathVariable int id){return cRepo.findById(id).get();}
+    public Categorias finById(@PathVariable int id){
+        return cRepo.findById(id).
+                orElseThrow(() -> new RuntimeException("La categoria con el ID: "+ id +" no existe"));
+    }
 
     @PostMapping("/categoria")
     public Categorias save(@RequestBody Categorias categorias) {
@@ -94,7 +124,12 @@ public class ProductoController {
     }
 
     @DeleteMapping({"/categoria/{id}"})
-    public void deleteByIdCategoria(@PathVariable int id) {cRepo.deleteById(id);}
+    public void deleteByIdCategoria(@PathVariable int id) {
+        if (!cRepo.existsById(id)) {
+            throw new RuntimeException("La categoria con el ID: " + id + " no existe");
+        }
+        cRepo.deleteById(id);
+    }
 
     @PutMapping("/categoria/{id}")
     public Categorias update(@RequestBody Categorias categorias, @PathVariable int id) {
@@ -108,7 +143,10 @@ public class ProductoController {
     public List<Descuento> findAllByOrderByNombreAscDesc(){return dRepo.findAll();}
 
     @GetMapping({"/descuento/{id}"})
-    public Descuento finByIdDescuento(@PathVariable int id){return dRepo.findById(id).get();}
+    public Descuento finByIdDescuento(@PathVariable int id){
+        return dRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("El descuento con el ID: "+ id +" no existe"));
+    }
 
     @PostMapping({"/descuento"})
     public Descuento save(@RequestBody Descuento descuento) {
@@ -116,7 +154,12 @@ public class ProductoController {
     }
 
     @DeleteMapping({"/descuento/{id}"})
-    public void deleteByIdDescuento(@PathVariable int id) {dRepo.deleteById(id);}
+    public void deleteByIdDescuento(@PathVariable int id) {
+        if (!dRepo.existsById(id)) {
+            throw new RuntimeException("El descuento con el ID: " + id + " no existe");
+        }
+        dRepo.deleteById(id);
+    }
 
     @PutMapping({"/descuento/{id}"})
     public Descuento update(@RequestBody Descuento descuento, @PathVariable int id) {
@@ -129,7 +172,10 @@ public class ProductoController {
     public List<Stack_prod> findAllByOrderByNombreAscStack(){return sRepo.findAll();}
 
     @GetMapping({"/stack/{id}"})
-    public Stack_prod finByIdStack(@PathVariable int id){return sRepo.findById(id).get();}
+    public Stack_prod finByIdStack(@PathVariable int id){
+        return sRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Las estadisticas con el ID: "+ id +" no existe"));
+    }
 
     @PostMapping({"/stack"})
     public Stack_prod save(@RequestBody Stack_prod stack) {
@@ -137,7 +183,12 @@ public class ProductoController {
     }
 
     @DeleteMapping({"/stack/{id}"})
-    public void deleteByIdStack(@PathVariable int id) {sRepo.deleteById(id);}
+    public void deleteByIdStack(@PathVariable int id) {
+        if (!sRepo.existsById(id)) {
+            throw new RuntimeException("Las estadisticas con el ID: " + id + " no existe");
+        }
+        sRepo.deleteById(id);
+    }
 
     @PutMapping({"/stack/{id}"})
     public Stack_prod update(@RequestBody Stack_prod stack, @PathVariable int id) {
