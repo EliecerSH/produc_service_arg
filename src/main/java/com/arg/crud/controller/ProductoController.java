@@ -50,7 +50,7 @@ public class ProductoController {
                     prodExistente.setId_categoria(producto.getId_categoria());
                     prodExistente.setId_descuento(producto.getId_descuento());
                     prodExistente.setId_tack_prod(producto.getId_tack_prod());
-                    prodExistente.setDescripcion(producto.getDescripcion());
+                    prodExistente.setId_descripcion(producto.getId_descripcion());
 
                     return repo.save(prodExistente);
                 })

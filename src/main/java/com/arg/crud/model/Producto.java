@@ -38,8 +38,8 @@ public class Producto {
     public int getId_tack_prod() { return id_stack_prod; }
     public void setId_tack_prod(int id_tack_prod) { this.id_stack_prod = id_tack_prod; }
 
-    public int getDescripcion() { return id_descripcion; }
-    public void setDescripcion(int descripcion) { this.id_descripcion = descripcion; }
+    public int getId_descripcion() { return id_descripcion; }
+    public void setId_descripcion(int id_descripcion) { this.id_descripcion = id_descripcion; }
 }
 
 
