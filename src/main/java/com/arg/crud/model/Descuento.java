@@ -10,7 +10,7 @@ public class Descuento {
     private String descripcion;
 
 
-    private int getId_descuento() {
+    public int getId_descuento() {
         return id_descuento;
     }
     public void setId_descuento(int id_descuento) {
